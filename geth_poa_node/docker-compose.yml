@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  geth:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: geth_poa_node
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+    networks:
+      - net_geth
+    volumes:
+      - ${GETH_HOST_DATA_VOL}:/gethdata
+      - ./mount_files/geth-full.start.sh:/geth/geth-full.start.sh
+    working_dir: /geth
+    entrypoint: ./geth-full.start.sh
+
+networks:
+  net_geth:
